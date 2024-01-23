@@ -6,7 +6,7 @@ export default function Example() {
 
     const [email, setEmail] = useState("");
     const [motDePasse, setMotDePasse] = useState("");
- //   const [login, setLogin] = useState(false);
+    const [login, setLogin] = useState(false);
 
 
     const handleSubmit = (e) => {
@@ -23,10 +23,12 @@ export default function Example() {
 
         axios(configuration)
             .then((result) => {
-                console.log(` success : ${JSON.stringify(result, null, 2)}`);;
+                console.log(` success : ${JSON.stringify(result, null, 2)}`);
+                setLogin(true);
             })
             .catch((error) => {
-               console.log(`error : ${JSON.stringify(error, null, 2)}`);
+                console.log(`error : ${JSON.stringify(error, null, 2)}`);
+                error = new Error();
             })
 
     }
@@ -67,7 +69,7 @@ export default function Example() {
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    onChange={(e) =>{ setEmail(e.target.value)} }
+                                    onChange={(e) => { setEmail(e.target.value) }}
                                 />
                             </div>
                         </div>
@@ -92,7 +94,7 @@ export default function Example() {
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    onChange={(e) =>{ setMotDePasse(e.target.value)} }
+                                    onChange={(e) => { setMotDePasse(e.target.value) }}
                                 />
                             </div>
                         </div>
@@ -106,6 +108,11 @@ export default function Example() {
                                 Sign in
                             </button>
                         </div>
+                        {login ? (
+                            <p className="text-success">You Are Logged in Successfully</p>
+                        ) : (
+                            <p className="text-danger">You Are Not Logged in</p>
+                        )}
                     </form>
                     {/*   
             <p className="mt-10 text-center text-sm text-gray-500">
