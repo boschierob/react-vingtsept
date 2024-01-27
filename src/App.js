@@ -1,9 +1,11 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Switch, Route } from "react-router-dom";
 import Navbar from './components/ui-elements/Navbar';
 import Login from './components/pages/Login';
 import Account from './components/pages/Account';
 import FreeComponent from './components/pages/FreeComponent';
+//import Register from "./components/pages/Register";
+import ProtectedRoutes from "./components/templates/ProtectedRoutes";
 
 
 
@@ -13,11 +15,12 @@ export default function App() {
     <div>
       <h1>React Authentication Tutorial</h1>
       <Navbar />
-      <Routes>
-        <Route exact path="/" element={<Account />} />
-        <Route exact path="/free" element={<FreeComponent />} />
-        <Route exact path="/login" element={<Login />} />
-      </Routes>
+      <Switch>
+        <Route exact path="/" component={FreeComponent} />
+        <Route exact path="/free" component={FreeComponent} />
+        <Route exact path="/login" component={Login} />
+        <ProtectedRoutes path="/account" component={Account} />
+      </Switch>
     </div>
 
   )

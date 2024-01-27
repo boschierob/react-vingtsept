@@ -1,57 +1,48 @@
 import React, { useState } from 'react';
+
 import axios from "axios";
-import Cookies from "universal-cookie";
 
 
-
-export default function Example() {
+export default function Register() {
 
     const [email, setEmail] = useState("");
     const [motDePasse, setMotDePasse] = useState("");
-    const [login, setLogin] = useState(false);
+    const [register, setRegister] = useState(false);
 
-    const cookies = new Cookies();
-
+    
 
     const handleSubmit = (e) => {
+
+        // prevent the form from refreshing the whole page
         e.preventDefault();
 
+        // set configurations
         const configuration = {
             method: "post",
-            url: "http://localhost:3333/login",
+            url: "http://localhost:3333/register",
             data: {
                 email,
-                motDePasse
-            }
-        }
+                motDePasse,
+            },
+        };
 
+        // make the API call
         axios(configuration)
-            .then((result) => {
-                console.log(` success : ${JSON.stringify(result, null, 2)}`);
-                setLogin(true);
-                // set the cookie
-                cookies.set("TOKEN", result.data.token, {
-                    path: "/",
-                });
-                // redirect user to the auth page
-                window.location.href = "/account";
-            })
-            .catch((error) => {
-                console.log(`error : ${JSON.stringify(error, null, 2)}`);
-                error = new Error();
-            })
+            .then((result) => { setRegister(true); })
+            .catch((error) => { error = new Error(); })
 
     }
+
     return (
         <>
             {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
+      This example requires updating your template:
+
+      ```
+      <html class="h-full bg-white">
+      <body class="h-full">
+      ```
+    */}
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
@@ -60,7 +51,7 @@ export default function Example() {
                         alt="Your Company"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900" id="recup-password">
-                        Sign in to your account
+                        Register your account
                     </h2>
                 </div>
 
@@ -89,11 +80,6 @@ export default function Example() {
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                     Password
                                 </label>
-                                <div className="text-sm">
-                                    <a href="#recup-password" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                        Forgot password?
-                                    </a>
-                                </div>
                             </div>
                             <div className="mt-2">
                                 <input
@@ -115,19 +101,19 @@ export default function Example() {
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 onClick={(e) => handleSubmit(e)}
                             >
-                                Sign in
+                                Register
                             </button>
                         </div>
-                        {login ? (
-                            <p className="text-success">You Are Logged in Successfully</p>
+                        {register ? (
+                            <p className="text-success">You Are Registered Successfully</p>
                         ) : (
-                            <p className="text-danger">You Are Not Logged in</p>
+                            <p className="text-danger">You Are Not Registered Yet</p>
                         )}
                     </form>
                     {/*   
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{' '}
-            </p> */}
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Not a member?{' '}
+        </p> */}
                 </div>
             </div>
         </>
